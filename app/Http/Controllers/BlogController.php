@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Blog;
 
 class BlogController extends Controller
 {
@@ -11,8 +12,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        //
-        return view("blog.index");
+        return view('blog.index');
     }
 
     /**
@@ -20,8 +20,7 @@ class BlogController extends Controller
      */
     public function create()
     {
-        //
-        return View("blog.create");
+        return view('blog.create');
     }
 
     /**
@@ -29,7 +28,21 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'banner_image' => 'required|image',
+        ]);
+
+        $data['user_id'] = $request->user()->id;
+
+        if ($request->hasFile('banner_image')) {
+            $data['banner_image'] = $request->file('banner_image')->store('blogs', 'public');
+        }
+
+        // Blog::create($data);
+
+        return redirect()->route('blog.index')->with('success', 'Blog created successfully');
     }
 
     /**
