@@ -8,10 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Blog extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        "title",
-        "description",
-        "banner_image",
-        "user_id",
-    ];
+
+    // Allow mass assignment for these fields
+    protected $fillable = ['title', 'description', 'banner_image', 'user_id'];
 }
