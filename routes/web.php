@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\BlogsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,3 +38,21 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
+
+Route::get("/home", function () {
+    return "Welcome to the home page";
+});
+
+Route::get("/user/{id}", function ($id) {
+    return "You are viewing user with ID" . $id;
+});
+
+Route::get("/user", function () {
+    return response()->json([
+        "user" => ["emmanuel", "Ameh", "Ene"]
+    ]);
+});
+
+Route::get("/blogs", [BlogsController::class, 'index']);
+Route::get("/blogs/{id}", [BlogsController::class, "show"]);
