@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\BlogController;
-use App\Http\Controllers\BlogsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -9,23 +7,16 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
+|
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-//Resource Routes
-Route::middleware(["auth", "verified"])->group(function () {
-    Route::get("blog", [BlogController::class, 'index'])->name('blog.index');
-});
-
 
 Route::get('/', function () {
     return view('welcome');
 });
-
-// Resource Routes
-Route::resource("blog", BlogController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -37,22 +28,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
-
-
-Route::get("/home", function () {
-    return "Welcome to the home page";
-});
-
-Route::get("/user/{id}", function ($id) {
-    return "You are viewing user with ID" . $id;
-});
-
-Route::get("/user", function () {
-    return response()->json([
-        "user" => ["emmanuel", "Ameh", "Ene"]
-    ]);
-});
-
-Route::get("/blogs", [BlogsController::class, 'index']);
-Route::get("/blogs/{id}", [BlogsController::class, "show"]);
+require __DIR__.'/auth.php';
